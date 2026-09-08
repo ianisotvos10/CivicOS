@@ -1,0 +1,7 @@
+backend-core/target/
+backend-core/.mvn/
+ai-service/venv/
+ai-service/__pycache__/
+frontend-web/node_modules/
+.idea/
+.vscode/

@@ -1,0 +1,8 @@
+target
+.git
+.gitignore
+README.md
+*.md
+**/node_modules
+**/venv
+**/__pycache__
