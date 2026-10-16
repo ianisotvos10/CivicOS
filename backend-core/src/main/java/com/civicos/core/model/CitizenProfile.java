@@ -8,7 +8,7 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "citizen_profiles")
-public class CitizenProfile {
+public class CitizenProfile extends Auditable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -36,17 +36,17 @@ public class CitizenProfile {
     private String dataExpirare; // Format YYYY-MM-DD
 
     @Column(length = 100)
+        @jakarta.persistence.Convert(converter = com.civicos.core.security.CryptoConverter.class)
     private String telefon;
 
     @Column(length = 100)
+        @jakarta.persistence.Convert(converter = com.civicos.core.security.CryptoConverter.class)
     private String email;
 
     @CreationTimestamp
     @Column(updatable = false)
-    private LocalDateTime createdAt;
 
     @UpdateTimestamp
-    private LocalDateTime updatedAt;
 
     // Getters and Setters
 
@@ -80,9 +80,4 @@ public class CitizenProfile {
     public String getEmail() { return email; }
     public void setEmail(String email) { this.email = email; }
 
-    public LocalDateTime getCreatedAt() { return createdAt; }
-    public void setCreatedAt(LocalDateTime createdAt) { this.createdAt = createdAt; }
-
-    public LocalDateTime getUpdatedAt() { return updatedAt; }
-    public void setUpdatedAt(LocalDateTime updatedAt) { this.updatedAt = updatedAt; }
 }

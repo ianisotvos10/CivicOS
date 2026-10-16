@@ -11,7 +11,8 @@ import java.util.UUID;
 @Entity
 @Table(name = "polls")
 @Data
-public class Poll {
+@lombok.EqualsAndHashCode(callSuper=true)
+public class Poll extends Auditable {
 
     @Id
     @GeneratedValue
@@ -34,11 +35,6 @@ public class Poll {
     @Column(nullable = false, length = 20)
     private String status = "ACTIVE";
 
-    @Column(nullable = false, updatable = false)
-    private LocalDateTime createdAt;
 
-    @PrePersist
-    protected void onCreate() {
-        this.createdAt = LocalDateTime.now();
-    }
+    
 }

@@ -10,7 +10,8 @@ import java.util.UUID;
 @Entity
 @Table(name = "requests")
 @Data
-public class Request {
+@lombok.EqualsAndHashCode(callSuper=true)
+public class Request extends Auditable {
 
     @Id
     @GeneratedValue
@@ -31,6 +32,7 @@ public class Request {
     private String description;
 
     @Column(length = 100)
+        @jakarta.persistence.Convert(converter = com.civicos.core.security.CryptoConverter.class)
     private String citizenEmail;
 
     // -- B2G Features (Heatmap, Routing, Translation) --
@@ -81,18 +83,14 @@ public class Request {
     @Column(nullable = false, length = 20)
     private RequestStatus status = RequestStatus.OPEN;
 
-    @Column(name = "created_at", nullable = false, updatable = false)
-    private LocalDateTime createdAt;
+    
 
-    @PrePersist
-    protected void onCreate() {
-        this.createdAt = LocalDateTime.now();
-    }
 
     public enum RequestStatus {
         OPEN,
         IN_PROGRESS,
         RESOLVED,
         REJECTED
-    }
+
+}
 }

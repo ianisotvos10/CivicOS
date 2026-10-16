@@ -9,7 +9,8 @@ import java.util.UUID;
 @Entity
 @Table(name = "appointments")
 @Data
-public class Appointment {
+@lombok.EqualsAndHashCode(callSuper=true)
+public class Appointment extends Auditable {
 
     @Id
     @GeneratedValue
@@ -36,11 +37,6 @@ public class Appointment {
     @Column(nullable = false, length = 20)
     private String status = "CONFIRMED";
 
-    @Column(nullable = false, updatable = false)
-    private LocalDateTime createdAt;
 
-    @PrePersist
-    protected void onCreate() {
-        this.createdAt = LocalDateTime.now();
-    }
+    
 }

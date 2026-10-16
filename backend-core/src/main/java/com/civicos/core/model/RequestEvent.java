@@ -9,7 +9,8 @@ import java.util.UUID;
 @Entity
 @Table(name = "request_events")
 @Data
-public class RequestEvent {
+@lombok.EqualsAndHashCode(callSuper=true)
+public class RequestEvent extends Auditable {
 
     @Id
     @GeneratedValue
@@ -27,11 +28,6 @@ public class RequestEvent {
     @Column(columnDefinition = "TEXT")
     private String description;
 
-    @Column(nullable = false, updatable = false)
-    private LocalDateTime createdAt;
 
-    @PrePersist
-    protected void onCreate() {
-        this.createdAt = LocalDateTime.now();
-    }
+    
 }

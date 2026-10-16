@@ -11,7 +11,8 @@ import java.util.UUID;
     @UniqueConstraint(columnNames = {"poll_id", "citizen_cnp"})
 })
 @Data
-public class PollVote {
+@lombok.EqualsAndHashCode(callSuper=true)
+public class PollVote extends Auditable {
 
     @Id
     @GeneratedValue
@@ -28,11 +29,6 @@ public class PollVote {
     @Column(nullable = false)
     private Integer optionIndex;
 
-    @Column(nullable = false, updatable = false)
-    private LocalDateTime createdAt;
 
-    @PrePersist
-    protected void onCreate() {
-        this.createdAt = LocalDateTime.now();
-    }
+    
 }

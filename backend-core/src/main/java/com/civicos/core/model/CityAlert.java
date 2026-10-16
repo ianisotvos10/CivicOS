@@ -10,7 +10,8 @@ import java.util.UUID;
 @Entity
 @Table(name = "city_alerts")
 @Data
-public class CityAlert {
+@lombok.EqualsAndHashCode(callSuper=true)
+public class CityAlert extends Auditable {
 
     @Id
     @GeneratedValue
@@ -36,11 +37,6 @@ public class CityAlert {
     @Column(nullable = false)
     private boolean active = true;
 
-    @Column(nullable = false, updatable = false)
-    private LocalDateTime createdAt;
 
-    @PrePersist
-    protected void onCreate() {
-        this.createdAt = LocalDateTime.now();
-    }
+    
 }

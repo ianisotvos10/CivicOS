@@ -1,22 +1,46 @@
 [HOTĂRÂRI DE CONSILIU LOCAL ȘI INFORMAȚII PUBLICE - MUNICIPIUL CLUJ-NAPOCA]
 
 1. IMPOZITE ȘI TAXE LOCALE:
-- Termenul limită pentru plata cu reducere de 10% a impozitului pe clădiri și auto este 31 martie.
-- Impozitele se pot plăti online prin platforma ghișeul.ro sau direct la casieriile primăriei.
-- Penalizările de întârziere sunt de 1% pe lună după scadență.
+- Termenul limită pentru plata cu reducere de 10% a impozitului pe clădiri, terenuri și auto este 31 martie a fiecărui an fiscal.
+- Impozitele se pot plăti online prin platforma CivicOS, Ghiseul.ro sau direct la casieriile primăriei.
+- Penalizările de întârziere sunt de 1% pe lună (sau fracțiune de lună) după scadență.
+- Scutirile pentru veterani și persoane cu dizabilități se depun până la 15 ianuarie.
 
 2. URBANISM ȘI AUTORIZAȚII DE CONSTRUIRE:
 - Pentru emiterea Certificatului de Urbanism (CU) sunt necesare: cerere tip, act de proprietate (copie), plan cadastral și extras de carte funciară (nu mai vechi de 30 zile).
 - Termenul legal de eliberare pentru CU este de 15-30 de zile lucrătoare.
-- Construirea de garduri noi necesită Autorizație de Construire.
+- Construirea de clădiri noi, mansardări, anexe sau garduri noi necesită obligatoriu Autorizație de Construire.
+- Lucrările executate fără autorizație se sancționează cu amendă între 1.000 și 100.000 RON și sistarea lucrărilor.
 
-3. SPAȚII VERZI ȘI DOMENIUL PUBLIC:
+3. SPAȚII VERZI, PARCĂRI ȘI DOMENIUL PUBLIC:
+- Parcarea pe trotuar sau pe spațiul verde se sancționează cu amendă între 500 și 1.000 RON și eventuala ridicare a autovehiculului.
 - Toaletarea arborilor de pe domeniul public se face doar de către RADP, în baza unei cereri aprobate de Serviciul Spații Verzi.
-- Parcarea pe spațiul verde se sancționează cu amendă între 500 și 1000 RON.
+- Locurile de parcare rezidențiale se atribuie anual prin licitație sau pe baza vechimii cererilor depuse la registratura primăriei.
 
-4. ASISTENȚĂ SOCIALĂ:
+4. ASISTENȚĂ SOCIALĂ ȘI FAMILIE:
 - Dosarele pentru alocația de susținere a familiei se depun la Direcția de Asistență Socială, de luni până joi între orele 08:00 - 14:00.
-- Ajutorul pentru încălzirea locuinței se acordă persoanelor cu venit net mediu lunar pe membru de familie sub 1386 RON.
+- Ajutorul pentru încălzirea locuinței se acordă persoanelor cu venit net mediu lunar pe membru de familie sub 1.386 RON (sau 2.053 RON pentru persoanele singure).
+- Tichetele sociale pentru pensionari și elevi se eliberează semestrial.
 
-5. SALUBRITATE ȘI DEȘEURI:
-- Ridicarea deșeurilor voluminoase (mobilă, electrocasnice) se face gratuit de către firma de salubritate, dar numai în baza unei programări telefonice în prealabil. Este interzisă abandonarea lor pe domeniul public.
+5. SALUBRITATE, COLECTARE SELECTIVĂ ȘI DEȘEURI:
+- Ridicarea deșeurilor voluminoase (mobilă, electrocasnice) se face gratuit de către operatorul de salubritate, în baza unei programări prealabile la dispecerat.
+- Este strict interzisă abandonarea deșeurilor sau a molozului pe domeniul public (amendă între 2.000 și 5.000 RON pentru persoane fizice).
+- Colectarea selectivă este obligatorie pe 4 fracții: plastic/metal, hârtie/carton, sticlă și deșeuri reziduale.
+
+6. REGULI DE CIRCULAȚIE RUTIERĂ ȘI DEPĂȘIREA LIMITEI DE VITEZĂ ÎN ORAȘ:
+- Limita generală de viteză în localitate este de 50 km/h (sau 30 km/h în zone rezidențiale semnalizate corespunzător).
+- Depășirea limitei legale de viteză în localitate se sancționează conform Codului Rutier:
+  * Cu 10 - 20 km/h peste limită: 2 - 3 puncte-amendă (aprox. 330 - 495 RON) + 2 puncte de penalizare.
+  * Cu 21 - 30 km/h peste limită: 4 - 5 puncte-amendă (aprox. 660 - 825 RON) + 3 puncte de penalizare.
+  * Cu 31 - 40 km/h peste limită: 6 - 8 puncte-amendă (aprox. 990 - 1.320 RON) + 4 puncte de penalizare.
+  * Cu 41 - 50 km/h peste limită: 9 - 20 puncte-amendă (aprox. 1.485 - 3.300 RON) + 6 puncte de penalizare.
+  * Cu peste 50 km/h peste limită: amendă din clasa a IV-a (9 - 20 puncte-amendă) + SUSPENDAREA permisului de conducere pentru 90 de zile.
+  * Cu peste 70 km/h peste limită: amendă din clasa a IV-a + SUSPENDAREA permisului de conducere pentru 120 de zile, cu dovadă fără drept de circulație.
+- Important: Amenda poate fi achitată la jumătate din minimul legal în termen de 15 zile de la comunicarea procesului-verbal, direct prin platforma CivicOS sau la casieria primăriei.
+
+7. PROGRAM DE LUCRU CU PUBLICUL ȘI CONTACT PRIMĂRIE:
+- Luni, Marți, Miercuri: 08:30 - 16:30
+- Joi: 08:30 - 18:30
+- Vineri: 08:30 - 14:00
+- Telefon Dispecerat Non-Stop: 0264-984
+- Portal online sesizări și audiențe: disponibil non-stop la adresa civicos.ro

@@ -1,15 +1,21 @@
 package com.civicos.core.model;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import org.hibernate.annotations.UuidGenerator;
-import java.time.LocalDateTime;
+
 import java.util.UUID;
 
 @Entity
 @Table(name = "tenants")
 @Data
-public class Tenant {
+@EqualsAndHashCode(callSuper = true)
+public class Tenant extends Auditable {
 
     @Id
     @GeneratedValue
@@ -22,12 +28,4 @@ public class Tenant {
 
     @Column(nullable = false, unique = true, length = 100)
     private String domain; // Ex: cluj.civicos.ro
-
-    @Column(name = "created_at", nullable = false, updatable = false)
-    private LocalDateTime createdAt;
-
-    @PrePersist // Se execută automat chiar înainte ca entitatea să fie salvată prima oară
-    protected void onCreate() {
-        this.createdAt = LocalDateTime.now();
-    }
 }

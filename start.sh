@@ -20,9 +20,9 @@ echo -e "${CYAN}   CivicOS - Pornire servicii locale   ${NC}"
 echo -e "${CYAN}=======================================${NC}"
 
 # ─────────────────────────────────────────
-# 1. PostgreSQL
+# 1. PostgreSQL & Redis
 # ─────────────────────────────────────────
-echo -e "\n${YELLOW}[1/4] Pornire PostgreSQL...${NC}"
+echo -e "\n${YELLOW}[1/6] Pornire PostgreSQL & Redis...${NC}"
 if pg_lsclusters 2>/dev/null | grep -q "online"; then
     echo -e "${GREEN}  ✓ PostgreSQL deja pornit${NC}"
 else
@@ -32,28 +32,39 @@ else
 fi
 
 # Creaza DB daca nu exista
-sudo -u postgres psql -p 5433 -c "CREATE USER civicos_user WITH PASSWORD 'civicos_password';" 2>/dev/null || true
-sudo -u postgres psql -p 5433 -c "CREATE DATABASE civicos_db OWNER civicos_user;" 2>/dev/null || true
-sudo -u postgres psql -p 5433 -c "GRANT ALL PRIVILEGES ON DATABASE civicos_db TO civicos_user;" 2>/dev/null || true
+sudo -u postgres psql -p 5433 -P pager=off -c "CREATE USER civicos_user WITH PASSWORD 'civicos_password';" 2>/dev/null || true
+sudo -u postgres psql -p 5433 -P pager=off -c "CREATE DATABASE civicos_db OWNER civicos_user;" 2>/dev/null || true
+sudo -u postgres psql -p 5433 -P pager=off -c "GRANT ALL PRIVILEGES ON DATABASE civicos_db TO civicos_user;" 2>/dev/null || true
+
+# Redis
+if redis-cli ping > /dev/null 2>&1; then
+    echo -e "${GREEN}  ✓ Redis deja pornit${NC}"
+else
+    redis-server --daemonize yes 2>/dev/null || true
+    sleep 1
+    echo -e "${GREEN}  ✓ Redis pornit${NC}"
+fi
 
 # ─────────────────────────────────────────
-# 2. AI Service (FastAPI Python)
+# 2. AI Service (FastAPI Python / OCR)
 # ─────────────────────────────────────────
-echo -e "\n${YELLOW}[2/4] Pornire AI Service (Python/FastAPI) pe portul 8000...${NC}"
-if curl -sf http://localhost:8000/docs > /dev/null 2>&1; then
+echo -e "\n${YELLOW}[2/6] Pornire AI Service (Python/FastAPI) pe portul 8001...${NC}"
+if curl -sf http://localhost:8001/docs > /dev/null 2>&1; then
     echo -e "${GREEN}  ✓ AI Service deja pornit${NC}"
 else
-    # Instalam dependente daca lipsesc
-    pip3 install fastapi uvicorn --ignore-installed --target="$ROOT_DIR/backend-ai/pkgs" -q 2>/dev/null || true
-    
     cd "$ROOT_DIR/backend-ai"
-    PYTHONPATH="$ROOT_DIR/backend-ai/pkgs" nohup python3 -m uvicorn main:app \
-        --host 0.0.0.0 --port 8000 \
+    if [ ! -d venv ]; then
+        python3 -m venv venv
+        ./venv/bin/pip install --upgrade pip -q
+        ./venv/bin/pip install fastapi uvicorn pydantic python-multipart google-genai requests -q
+    fi
+    
+    nohup ./venv/bin/uvicorn main:app --host 0.0.0.0 --port 8001 \
         > "$LOG_DIR/ai-service.log" 2>&1 &
     echo $! > "$LOG_DIR/ai-service.pid"
     sleep 3
     
-    if curl -sf http://localhost:8000/docs > /dev/null 2>&1; then
+    if curl -sf http://localhost:8001/docs > /dev/null 2>&1; then
         echo -e "${GREEN}  ✓ AI Service pornit (PID: $(cat $LOG_DIR/ai-service.pid))${NC}"
     else
         echo -e "${RED}  ✗ AI Service nu s-a pornit. Vezi: $LOG_DIR/ai-service.log${NC}"
@@ -61,13 +72,34 @@ else
 fi
 
 # ─────────────────────────────────────────
-# 3. Backend Spring Boot
+# 3. Microserviciu Notificări (Go / WebSocket)
 # ─────────────────────────────────────────
-echo -e "\n${YELLOW}[3/4] Pornire Backend Java (Spring Boot) pe portul 8081...${NC}"
+echo -e "\n${YELLOW}[3/6] Pornire Notificări WebSocket (Go) pe portul 9090...${NC}"
+if curl -sf http://localhost:9090/health > /dev/null 2>&1; then
+    echo -e "${GREEN}  ✓ Notification Service deja pornit${NC}"
+else
+    cd "$ROOT_DIR/backend-notifications"
+    if [ ! -f ./notifications ]; then
+        go build -o notifications .
+    fi
+    nohup ./notifications > "$LOG_DIR/notifications.log" 2>&1 &
+    echo $! > "$LOG_DIR/notifications.pid"
+    sleep 2
+
+    if curl -sf http://localhost:9090/health > /dev/null 2>&1; then
+        echo -e "${GREEN}  ✓ Notification Service pornit (PID: $(cat $LOG_DIR/notifications.pid))${NC}"
+    else
+        echo -e "${RED}  ✗ Notification Service nu s-a pornit. Vezi: $LOG_DIR/notifications.log${NC}"
+    fi
+fi
+
+# ─────────────────────────────────────────
+# 4. Backend Spring Boot (Java)
+# ─────────────────────────────────────────
+echo -e "\n${YELLOW}[4/6] Pornire Backend Java (Spring Boot) pe portul 8081...${NC}"
 if curl -sf http://localhost:8081/api/v1/requests > /dev/null 2>&1; then
     echo -e "${GREEN}  ✓ Backend deja pornit${NC}"
 else
-    # Elibereaza portul 8081 daca e ocupat
     fuser -k 8081/tcp 2>/dev/null || true
     sleep 1
     
@@ -93,14 +125,13 @@ else
 fi
 
 # ─────────────────────────────────────────
-# 4. Frontend React (Vite)
+# 5. Frontend React (Vite)
 # ─────────────────────────────────────────
-echo -e "\n${YELLOW}[4/4] Pornire Frontend React (Vite) pe portul 5173...${NC}"
+echo -e "\n${YELLOW}[5/6] Pornire Frontend React (Vite) pe portul 5173...${NC}"
 if curl -sf http://localhost:5173 > /dev/null 2>&1; then
     echo -e "${GREEN}  ✓ Frontend deja pornit${NC}"
 else
     cd "$ROOT_DIR/frontend"
-    # Instaleaza npm deps daca lipsesc
     [ -d node_modules ] || npm install -q
     
     nohup npm run dev -- --host 0.0.0.0 \
@@ -114,15 +145,17 @@ fi
 # Sumar
 # ─────────────────────────────────────────
 echo ""
-echo -e "${CYAN}=======================================${NC}"
-echo -e "${GREEN}  Toate serviciile sunt pornite!${NC}"
-echo -e "${CYAN}=======================================${NC}"
+echo -e "${CYAN}======================================================${NC}"
+echo -e "${GREEN}  Toate serviciile CivicOS sunt pornite și gata!${NC}"
+echo -e "${CYAN}======================================================${NC}"
 echo ""
-echo -e "  ${GREEN}Frontend:   ${NC}http://localhost:5173"
-echo -e "  ${GREEN}Backend API:${NC}http://localhost:8081/api/v1/requests"
-echo -e "  ${GREEN}AI Service: ${NC}http://localhost:8000/docs"
-echo -e "  ${GREEN}Logs:       ${NC}$LOG_DIR/"
+echo -e "  ${GREEN}Portal Cetățean:      ${NC}http://localhost:5173/"
+echo -e "  ${GREEN}Portal Administrație: ${NC}http://localhost:5173/admin"
+echo -e "  ${GREEN}Notificări WebSocket: ${NC}ws://localhost:9090/ws"
+echo -e "  ${GREEN}Backend API:          ${NC}http://localhost:8081/api/v1/requests"
+echo -e "  ${GREEN}AI Service & OCR:     ${NC}http://localhost:8001/docs"
+echo -e "  ${GREEN}Redis Caching:        ${NC}localhost:6379 (PONG)"
+echo -e "  ${GREEN}Logs:                 ${NC}$LOG_DIR/"
 echo ""
-echo -e "${YELLOW}  Pentru a opri: ./stop.sh${NC}"
+echo -e "${YELLOW}  Pentru a opri toate serviciile: ./stop.sh${NC}"
 echo ""
-
